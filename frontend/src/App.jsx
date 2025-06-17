@@ -1,0 +1,17 @@
+import { Link, Route, Routes } from "react-router-dom";
+import { WelcomeParagraph } from "./lib/constants";
+import ExplorePage from "./pages/ExploreMars";
+import Home from "./pages/Home";
+
+function App() {
+  return (
+    <main className="min-h-screen bg-white flex items-center justify-center px-4">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/explore-mars" element={<ExplorePage />} />
+      </Routes>
+    </main>
+  );
+}
+
+export default App;
