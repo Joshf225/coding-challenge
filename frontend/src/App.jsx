@@ -5,10 +5,11 @@ import Home from "./pages/Home";
 
 function App() {
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center px-4">
+    <main className="min-h-screen bg-white flex items-center justify-center">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore-mars" element={<ExplorePage />} />
+        {/* <Route path="/trivia" element={<Trivia />} /> */}
       </Routes>
     </main>
   );
