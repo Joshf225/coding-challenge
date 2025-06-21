@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { WelcomeParagraph } from "../lib/constants";
+import { WelcomeParagraph } from "../utils/constants";
 
 function Home() {
   return (
@@ -14,12 +14,20 @@ function Home() {
         <p className="text-gray-700 text-base mb-6 leading-relaxed">
           {WelcomeParagraph}
         </p>
-        <Link
-          className="bg-[#1d3e8a] text-white px-6 py-2 rounded-md text-lg font-medium hover:bg-[#15316d] transition cursor-pointer"
-          to="/explore-mars"
-        >
-          Explore Mars
-        </Link>
+        <div className="flex items-center justify-center gap-5">
+          <Link
+            className="bg-[#1d3e8a] text-white px-6 py-2 rounded-md text-lg font-medium hover:bg-[#15316d] transition cursor-pointer"
+            to="/explore-mars"
+          >
+            Explore Mars
+          </Link>
+          <Link
+            className="bg-[#1d3e8a] text-white px-6 py-2 rounded-md text-lg font-medium hover:bg-[#15316d] transition cursor-pointer"
+            to="/feed"
+          >
+            Check out our Feed
+          </Link>
+        </div>
       </div>
     </div>
   );
