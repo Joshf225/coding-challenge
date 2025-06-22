@@ -51,11 +51,12 @@ const AsteroidDashboard = () => {
     }
 
     const fetchNEO = async () => {
+      const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
       setLoading(true);
 
       try {
         const res = await fetch(
-          `http://localhost:3000/api/feed?start=${fromDate}&end=${toDate}`
+          `${baseUrl}/feed?start=${fromDate}&end=${toDate}`
         );
         const data = await res.json();
         setNeoData(data.near_earth_objects);

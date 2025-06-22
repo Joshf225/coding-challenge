@@ -18,7 +18,7 @@ const ExplorePage = () => {
   const [roverMaxSol, setRoverMaxSol] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const baseUrl = "http://localhost:3000/api";
+  const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
 
   const fetchPhotos = async () => {
     if (!rover || !cameras)
