@@ -4,6 +4,7 @@ import PhotoGrid from "../components/explore-page/PhotoGrid";
 import SolSlider from "../components/explore-page/SolSlider";
 import RoverCameras from "../components/explore-page/RoverCameras";
 import Rover from "../components/explore-page/Rover";
+import Navbar from "../components/Navbar";
 
 const ExplorePage = () => {
   const [rover, setRover] = useState(null);
@@ -117,15 +118,9 @@ const ExplorePage = () => {
   return (
     <div className="min-h-screen w-full bg-white border">
       {/* Header */}
-      <header className="flex justify-between items-center mb-10 bg-[#0c1c3b] h-[60px] w-full px-11">
-        <h1 className="text-3xl font-bold">Mission to Mars</h1>
-        <nav className="space-x-6 text-lg font-medium text-white">
-          <Link to="/">Home</Link>
-          <Link to="/explore-mars">Explore Mars</Link>
-          <Link to="/trivia">Trivia</Link>
-          <Link to="/feed">Dashboard</Link>
-        </nav>
-      </header>
+      <div className="mb-10">
+        <Navbar />
+      </div>
 
       {/* Controls */}
       <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white px-11">

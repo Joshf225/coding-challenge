@@ -67,10 +67,10 @@ const PhotoGrid = ({
               </div>
             </>
           ) : (
-            <p className="text-gray-600 border w-1/2 flex items-center justify-center">
+            <p className="text-gray-600 w-1/2 flex items-center justify-center">
               We found {length} photos for the {rover} rover on Sol {sol}! But
               unfortunetly the photos for this Rover and Sol date have been
-              corrupted. Try changing the sol!
+              corrupted 😓😓😓. Try changing the sol!
             </p>
           )}
         </>

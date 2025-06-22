@@ -3,6 +3,7 @@ import { WelcomeParagraph } from "./utils/constants";
 import ExplorePage from "./pages/ExploreMars";
 import Home from "./pages/Home";
 import AsteroidDashboard from "./pages/AsteroidDashboard";
+import Trivia from "./pages/Trivia";
 
 function App() {
   return (
@@ -10,8 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore-mars" element={<ExplorePage />} />
-        {/* <Route path="/trivia" element={<Trivia />} /> */}
-        <Route path="/feed" element={<AsteroidDashboard />} />
+        <Route path="/trivia" element={<Trivia />} />
+        <Route path="/dashboard" element={<AsteroidDashboard />} />
       </Routes>
     </main>
   );

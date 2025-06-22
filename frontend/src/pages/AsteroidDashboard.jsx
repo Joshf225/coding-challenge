@@ -8,8 +8,9 @@ import {
   LineElement,
   PointElement,
 } from "chart.js";
-import DatePicker from "../components/feed/DatePicker";
+import DatePicker from "../components/dashboard/DatePicker";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -97,17 +98,10 @@ const AsteroidDashboard = () => {
   });
 
   return (
-    <div className="h-screen w-full bg-white px-6 py-10">
-      <header className="flex justify-between items-center mb-10 bg-[#0c1c3b] h-[60px] w-full px-11">
-        <h1 className="text-3xl font-bold">Mission to Mars</h1>
-        <nav className="space-x-6 text-lg font-medium text-white">
-          <Link to="/">Home</Link>
-          <Link to="/explore-mars">Explore Mars</Link>
-          <Link to="/trivia">Trivia</Link>
-          <Link to="/feed">Dashboard</Link>
-        </nav>
-      </header>
-      <h1 className="text-3xl font-bold text-[#0c1c3b] mb-6">
+    <div className="h-screen w-full bg-white relative">
+      <Navbar />
+
+      <h1 className="text-3xl font-bold text-[#0c1c3b] mt-20">
         Asteroid Threat Visualizer
       </h1>
 

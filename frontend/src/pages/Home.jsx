@@ -23,9 +23,9 @@ function Home() {
           </Link>
           <Link
             className="bg-[#1d3e8a] text-white px-6 py-2 rounded-md text-lg font-medium hover:bg-[#15316d] transition cursor-pointer"
-            to="/feed"
+            to="/dashboard"
           >
-            Check out our Feed
+            Dashboard
           </Link>
         </div>
       </div>

@@ -7,6 +7,10 @@ export const navbarItems = [
     title: "Trivia",
     url: "/trivia",
   },
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+  },
 ];
 
 export const WelcomeParagraph =
