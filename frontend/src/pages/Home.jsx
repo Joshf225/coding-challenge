@@ -22,7 +22,7 @@ function Home() {
             Explore Mars
           </Link>
           <Link
-            className="bg-[#1d3e8a] text-white px-6 py-2 rounded-md text-lg font-medium hover:bg-[#15316d] transition cursor-pointer"
+            className="bg-[#1d3e8a] text-white px-6 py-2 rounded-md text-lg font-medium hover:bg-[#15316d] transition cursor-pointer sm:h-auto  h-[72px] flex items-center justify-center"
             to="/dashboard"
           >
             Dashboard

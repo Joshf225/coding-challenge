@@ -21,8 +21,7 @@ const ExplorePage = () => {
   const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
 
   const fetchPhotos = async () => {
-    if (!rover || !cameras)
-      return console.log("missing rover, sol, or cameras");
+    if (!rover || !cameras) return console.log("missing rover or cameras");
 
     const cacheKey = `${rover}_${cameras}_sol${sol}`;
     const cached = localStorage.getItem(cacheKey);
@@ -30,7 +29,7 @@ const ExplorePage = () => {
     if (cached) {
       setDisplayPhotos(JSON.parse(cached));
       setPhotosLength(JSON.parse(cached).length);
-      return console.log("PULLED FROM CACHE!!");
+      return;
     }
     try {
       setIsLoading(true);
@@ -103,9 +102,7 @@ const ExplorePage = () => {
   };
 
   React.useEffect(() => {
-    if (!rover || !RoverDetails)
-      return console.log(`Couldnt find rover or roverDetails??`);
-    console.log("Rover Details: ", RoverDetails);
+    if (!rover || !RoverDetails) return;
     fetchPhotos();
   }, [RoverDetails, rover]);
 
@@ -116,14 +113,14 @@ const ExplorePage = () => {
   }, [rover]);
 
   return (
-    <div className="min-h-screen w-full bg-white border">
+    <div className="min-h-screen w-full border">
       {/* Header */}
       <div className="mb-10">
         <Navbar />
       </div>
 
       {/* Controls */}
-      <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white px-11">
+      <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 sm:px-11 px-5">
         {/* Rover */}
         <Rover setRover={setRover} />
 

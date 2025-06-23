@@ -7,7 +7,7 @@ import Trivia from "./pages/Trivia";
 
 function App() {
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center">
+    <main className="min-h-screen bg-[#b8c6db] flex items-center justify-center">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore-mars" element={<ExplorePage />} />

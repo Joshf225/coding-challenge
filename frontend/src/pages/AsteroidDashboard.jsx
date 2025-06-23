@@ -11,6 +11,7 @@ import {
 import DatePicker from "../components/dashboard/DatePicker";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Loader from "../components/Loader2";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -34,7 +35,7 @@ const AsteroidDashboard = () => {
   const start = new Date().toISOString().split("T")[0];
   const end = new Date(Date.now() + 6 * 86400000).toISOString().split("T")[0]; // +6 days
   const [neoData, setNeoData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [fromDate, setFromDate] = useState(start);
   const [toDate, setToDate] = useState(end);
@@ -43,8 +44,6 @@ const AsteroidDashboard = () => {
   useEffect(() => {
     // check if user chose dates one week apart
     const days = getDayDifference(fromDate, toDate) + 1;
-
-    console.log("Days: ", days);
 
     if (days !== 7) {
       return alert("You must pick dates that are a week apart!");
@@ -99,87 +98,91 @@ const AsteroidDashboard = () => {
   });
 
   return (
-    <div className="h-screen w-full bg-white relative">
+    <>
       <Navbar />
-
-      <h1 className="text-3xl font-bold text-[#0c1c3b] mt-20">
-        Asteroid Threat Visualizer
-      </h1>
-
-      {loading ? (
-        <p className="text-gray-600">Loading data...</p>
-      ) : (
-        <>
-          {/* Chart 1: NEOs per day */}
-          <div className="flex items-center justify-center gap-11">
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                Total Near-Earth Objects Per Day
-              </h2>
-              <div className="h-[300px] bg-gray-100 rounded-lg p-4 shadow">
-                <Line
-                  data={{
-                    labels: days,
-                    datasets: [
-                      {
-                        label: "# of Asteroids",
-                        data: neosPerDay,
-                        borderColor: "#1d3e8a",
-                        backgroundColor: "#1d3e8a",
-                        fill: false,
-                      },
-                    ],
-                  }}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Chart 2: Avg Velocity and Diameter */}
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                Average Velocity & Diameter
-              </h2>
-              <div className="h-[300px] bg-gray-100 rounded-lg p-4 shadow">
-                <Bar
-                  data={{
-                    labels: days,
-                    datasets: [
-                      {
-                        label: "Avg Velocity (km/h)",
-                        data: avgVelocityData,
-                        backgroundColor: "#1d3e8a",
-                      },
-                      {
-                        label: "Avg Diameter (m)",
-                        data: avgDiameterData,
-                        backgroundColor: "#e33e3e",
-                      },
-                    ],
-                  }}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                  }}
-                />
-              </div>
-            </div>
+      <div className="h-full w-full relative">
+        {loading ? (
+          <div className="flex items-center justify-center sm:mb-[12rem]">
+            <Loader />
           </div>
-        </>
-      )}
-      <div>
-        <h2>Check for the Asteroid Threats on other dates</h2>
-        <DatePicker
-          setToDate={setToDate}
-          setFromDate={setFromDate}
-          setCheckDate={setCheckDate}
-          checkDate={checkDate}
-        />
+        ) : (
+          <>
+            <h1 className="text-3xl font-bold sm:text-left text-center text-[#0c1c3b] mt-20 px-5">
+              Asteroid Threat Visualizer
+            </h1>
+            {/* Chart 1: NEOs per day*/}
+            <div className="flex sm:flex-row flex-col items-center justify-center gap-11">
+              <div className="mb-10">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                  Total Near-Earth Objects Per Day
+                </h2>
+                <div className="h-[300px] bg-gray-100 rounded-lg p-4 shadow">
+                  <Line
+                    data={{
+                      labels: days,
+                      datasets: [
+                        {
+                          label: "# of Asteroids",
+                          data: neosPerDay,
+                          borderColor: "#1d3e8a",
+                          backgroundColor: "#1d3e8a",
+                          fill: false,
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-10">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                  Average Velocity & Diameter
+                </h2>
+                <div className="h-[300px] bg-gray-100 rounded-lg p-4 shadow">
+                  <Bar
+                    data={{
+                      labels: days,
+                      datasets: [
+                        {
+                          label: "Avg Velocity (km/h)",
+                          data: avgVelocityData,
+                          backgroundColor: "#1d3e8a",
+                        },
+                        {
+                          label: "Avg Diameter (m)",
+                          data: avgDiameterData,
+                          backgroundColor: "#e33e3e",
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center px-5">
+              <h2 className="text-black">
+                Check for the Asteroid Threats on other dates
+              </h2>
+              <DatePicker
+                setToDate={setToDate}
+                setFromDate={setFromDate}
+                setCheckDate={setCheckDate}
+                checkDate={checkDate}
+              />
+            </div>
+          </>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

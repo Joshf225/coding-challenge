@@ -2,7 +2,7 @@ import React from "react";
 
 const SolSlider = ({ roverMaxSol, sol, setSol }) => {
   return (
-    <section className="mt-6">
+    <section className="mt-6 sm:px-0 px-5">
       <div className="w-full flex items-center justify-center gap-5">
         <label className="block text-gray-700 font-medium mb-1">Sol</label>
         <input

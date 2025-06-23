@@ -34,7 +34,7 @@ const PhotoGrid = ({
       {!isLoading ? (
         <>
           {displayPhotos.length > 0 ? (
-            <>
+            <section className="px-5">
               <h2 className="text-xl font-medium text-gray-800 mb-2">
                 We found {length} photos for the {rover} rover on Sol {sol}!
               </h2>
@@ -65,28 +65,30 @@ const PhotoGrid = ({
                       </a>
                     ))}
               </div>
-            </>
+            </section>
           ) : (
-            <p className="text-gray-600 w-1/2 flex items-center justify-center">
-              We found {length} photos for the {rover} rover on Sol {sol}! But
-              unfortunetly the photos for this Rover and Sol date have been
-              corrupted 😓😓😓. Try changing the sol!
-            </p>
+            rover && (
+              <p className="text-gray-600 sm:w-1/2 sm:px-0 px-5 flex items-center justify-center">
+                We found {length} photos for the {rover} rover on Sol {sol}! But
+                unfortunetly the photos for this Rover and Sol date have been
+                corrupted 😓😓😓. Try changing the sol!
+              </p>
+            )
           )}
         </>
       ) : (
-        <div className="mt-[200px] flex items-center justify-center">
+        <div className="mt-[200px] flex items-center justify-center m-4">
           <Loader />
         </div>
       )}
-      <div className="flex gap-5 ">
+      <div className="flex gap-5 justify-center items-center sm:mb-0 mb-5">
         <button
           className={`bg-black h-6 w-11 ${
             currIndex >= 20 ? "" : "hidden" || length < 10 ? "hidden" : ""
           }`}
           onClick={() => handlePreviousSlide()}
         >
-          Prev
+          Back
         </button>
         <button
           className={`bg-black h-6 w-11 ${

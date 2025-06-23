@@ -7,7 +7,7 @@ const RoverCameras = ({ RoverDetails, cameras, setCameras }) => {
       <select
         defaultValue={cameras}
         onChange={(e) => setCameras(e.target.value)}
-        className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0c1c3b] bg-transparent text-black border-gray-400"
+        className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0c1c3b] bg-white text-black border-gray-400"
       >
         <option value="navcam" key="navcam">
           NAVCAM
