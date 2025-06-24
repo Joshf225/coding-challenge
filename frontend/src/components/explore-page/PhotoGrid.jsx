@@ -11,10 +11,6 @@ const PhotoGrid = ({
 }) => {
   const [currIndex, setCurrIndex] = useState(10);
 
-  useEffect(() => {
-    console.log("Display Photos: ", displayPhotos);
-  }, [displayPhotos]);
-
   const handleNextSlide = () => {
     if (currIndex + 10 > displayPhotos.length) {
       return setCurrIndex(0);

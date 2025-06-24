@@ -18,12 +18,8 @@ app.listen(port, () => {
 
 const apiKey = process.env.NASA_API_KEY;
 
-//optimise api to grab data from the based on earth_date and store it in localStorage, then if the date is changed we grap photos from localStorage based off the other filters (sol, camers etc..)
-
 app.get("/api/mars-photos", async (req, res) => {
   const { rover, cameras, sol } = req.query;
-
-  console.log("PARAMS: ", rover, cameras, sol);
 
   const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${sol}&cameras=${cameras}&api_key=${apiKey}`;
 
