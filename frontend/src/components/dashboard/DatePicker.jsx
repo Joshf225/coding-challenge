@@ -7,23 +7,28 @@ const DatePicker = ({ setFromDate, setToDate, checkDate, setCheckDate }) => {
       {/* From */}
       <div className="flex sm:flex-row flex-col items-center justify-center gap-3">
         <div>
-          <label className="text-black">From</label>
+          <label className="text-black" htmlFor="fromDate">
+            From
+          </label>
           <input
-            // defaultValue={cameras}
             onChange={(e) => setFromDate(`${e.target.value}`)}
             className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0c1c3b] bg-white text-black border-gray-400 cursor-pointer"
             type="date"
+            id="fromDate"
           />
         </div>
 
         {/* To */}
         <div>
-          <label className="text-black">To</label>
+          <label className="text-black" htmlFor="toDate">
+            To
+          </label>
           <input
             // defaultValue={cameras}
             onChange={(e) => setToDate(`${e.target.value}`)}
             className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0c1c3b] bg-white text-black border-gray-400 cursor-pointer"
             type="date"
+            id="toDate"
           />
         </div>
         <button

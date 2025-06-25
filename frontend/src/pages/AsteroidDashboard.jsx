@@ -9,7 +9,7 @@ import {
   PointElement,
 } from "chart.js";
 import DatePicker from "../components/dashboard/DatePicker";
-import { Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader2";
 ChartJS.register(
@@ -20,7 +20,7 @@ ChartJS.register(
   PointElement
 );
 
-const getDayDifference = (fromDateStr, toDateStr) => {
+export const getDayDifference = (fromDateStr, toDateStr) => {
   const from = new Date(fromDateStr);
   const to = new Date(toDateStr);
 
@@ -35,7 +35,7 @@ const AsteroidDashboard = () => {
   const start = new Date().toISOString().split("T")[0];
   const end = new Date(Date.now() + 6 * 86400000).toISOString().split("T")[0]; // +6 days
   const [neoData, setNeoData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [fromDate, setFromDate] = useState(start);
   const [toDate, setToDate] = useState(end);

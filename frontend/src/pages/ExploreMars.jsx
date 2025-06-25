@@ -5,6 +5,10 @@ import SolSlider from "../components/explore-page/SolSlider";
 import RoverCameras from "../components/explore-page/RoverCameras";
 import Rover from "../components/explore-page/Rover";
 import Navbar from "../components/Navbar";
+import {
+  fetchMarsPhotos,
+  fetchRoverDetails,
+} from "../features/trivia/explore/api";
 
 const ExplorePage = () => {
   const [rover, setRover] = useState(null);
@@ -33,16 +37,12 @@ const ExplorePage = () => {
     }
     try {
       setIsLoading(true);
-      const params = `rover=${rover}&cameras=${cameras}&sol=${sol}`;
-      const url = `${baseUrl}/mars-photos?${params}`;
-
-      const res = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const { photos, length } = await res.json();
+      const { photos, length } = await fetchMarsPhotos(
+        rover,
+        cameras,
+        sol,
+        baseUrl
+      );
       setPhotosLength(length);
 
       const validPhotos = photos
@@ -86,13 +86,7 @@ const ExplorePage = () => {
   const fetchRover = async (cappedRover) => {
     try {
       setIsLoading(true);
-      const res = await fetch(`${baseUrl}/manifests?rover=${cappedRover}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const { roverDetails } = await res.json();
+      const { roverDetails } = await fetchRoverDetails(rover, baseUrl);
       setRoverDetails(roverDetails);
       setRoverMaxSol(roverDetails.max_sol);
       setIsLoading(false);

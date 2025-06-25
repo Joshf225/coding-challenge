@@ -1,5 +1,6 @@
 import { useState } from "react";
 import data from "./data";
+import { calculateScore } from "./triviaUtils";
 
 function TriviaQuestions() {
   const [currentQuizData, setCurrentQuizData] = useState(0);
@@ -30,9 +31,7 @@ function TriviaQuestions() {
     const answer = getSelected();
 
     if (answer) {
-      if (answer === quiz.correct) {
-        setScore(score + 1);
-      }
+      setScore(calculateScore(score, answer, quiz.correct));
       setCurrentQuizData(currentQuizData + 1);
       deselectAns();
     } else {
