@@ -1,6 +1,6 @@
 name: Project Tests
 
-on: [pull_request]
+on: [push]
 jobs:
   Run-Tests:
     runs-on: ubuntu-latest
