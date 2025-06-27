@@ -8,6 +8,7 @@ const PhotoGrid = ({
   rover,
   cameras,
   length,
+  earthDate,
 }) => {
   const [currIndex, setCurrIndex] = useState(10);
 
@@ -35,7 +36,7 @@ const PhotoGrid = ({
                 We found {length} photos for the {rover} rover on Sol {sol}!
               </h2>
               <h2 className="text-xl font-medium text-gray-800 mb-2">
-                {rover} | {cameras} | Sol {sol}
+                {rover} | {cameras} | Sol {sol} / or {earthDate} on Earth
               </h2>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">

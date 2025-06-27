@@ -10,6 +10,6 @@ export const fetchMarsPhotos = async (rover, cameras, sol, baseUrl) => {
 export const fetchRoverDetails = async (rover, baseUrl) => {
   const url = `${baseUrl}/manifests?rover=${rover}`;
   const res = await fetch(url);
-  const { roverDetails } = await res.json();
-  return roverDetails;
+  const resJson = await res.json();
+  return resJson.roverDetails;
 };
