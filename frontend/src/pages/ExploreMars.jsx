@@ -20,6 +20,7 @@ const ExplorePage = () => {
   // keeping track for whenever we need to check the new photos from localStorage
   const [RoverDetails, setRoverDetails] = useState(null);
   const [roverMaxSol, setRoverMaxSol] = useState("");
+  const [earthDate, setEarthDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
@@ -33,7 +34,9 @@ const ExplorePage = () => {
     if (cached) {
       setDisplayPhotos(JSON.parse(cached));
       setPhotosLength(JSON.parse(cached).length);
-      return;
+      setEarthDate(JSON.parse(cached)[0].earth_date);
+      console.log("CACHE: ", JSON.parse(cached));
+      return console.log("pulled from cache");
     }
     try {
       setIsLoading(true);
@@ -64,17 +67,18 @@ const ExplorePage = () => {
             earth_date: photo.earth_date,
             name: photo.rover.name,
             sol,
+            roverInfo: photo.rover,
           };
           return temp;
         });
       localStorage.setItem(cacheKey, JSON.stringify(validPhotos));
 
+      //check if photos array is empty
       if (validPhotos.length < 1) {
         setDisplayPhotos([]);
         return console.log("No Valid Photos from these options!");
       }
-      //check if photos array is empty
-
+      console.log("Valid Photos: ", validPhotos);
       setDisplayPhotos(validPhotos || []);
     } catch (error) {
       console.error("Error fetching photos:", error);
@@ -86,7 +90,7 @@ const ExplorePage = () => {
   const fetchRover = async (cappedRover) => {
     try {
       setIsLoading(true);
-      const { roverDetails } = await fetchRoverDetails(rover, baseUrl);
+      const roverDetails = await fetchRoverDetails(cappedRover, baseUrl);
       setRoverDetails(roverDetails);
       setRoverMaxSol(roverDetails.max_sol);
       setIsLoading(false);
@@ -146,6 +150,7 @@ const ExplorePage = () => {
         rover={rover}
         cameras={cameras}
         length={photosLength}
+        earthDate={earthDate}
       />
     </div>
   );
