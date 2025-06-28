@@ -1,11 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import data from "./data";
 import { calculateScore } from "./triviaUtils";
+import { getAiResponse } from "./hinter/ai";
+
+import Hint from "../../components/trivia/Hint";
+import Questions from "../../components/trivia/Questions";
+import Restart from "../../components/trivia/Restart";
+import ImageLoader from "../../components/loaders/ImageLoader";
 
 function TriviaQuestions() {
   const [currentQuizData, setCurrentQuizData] = useState(0);
+  const [hint, setHint] = useState("");
+  const [showHint, setShowHint] = useState(false);
+  const [loadingHint, setLoadingHint] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [score, setScore] = useState(0);
   const quiz = data[currentQuizData];
+
+  async function useAi() {
+    setLoadingHint(true);
+    const aiResponse = await getAiResponse(quiz);
+    setLoadingHint(false);
+    setHint(aiResponse);
+  }
+
+  const handleNewHint = async () => {
+    setLoadingHint(true);
+    const reRun = await getAiResponse(quiz, "<hint/>", hint);
+    setLoadingHint(false);
+    setHint(reRun);
+  };
+
+  const handleHintClick = async () => {
+    setShowHint(true);
+    setLoadingHint(true);
+    await useAi();
+    setLoadingHint(false);
+  };
+
+  const handleExitHint = () => {
+    setShowHint(false);
+  };
 
   function getSelected() {
     const answerEls = document.querySelectorAll(".answer");
@@ -34,6 +69,7 @@ function TriviaQuestions() {
       setScore(calculateScore(score, answer, quiz.correct));
       setCurrentQuizData(currentQuizData + 1);
       deselectAns();
+      setShowHint(false);
     } else {
       alert("Please give an answer");
     }
@@ -46,87 +82,27 @@ function TriviaQuestions() {
 
   if (currentQuizData < data.length) {
     return (
-      <div className="flex items-center justify-center min-h-screen font-poppins text-black">
-        <div className="bg-white rounded-xl overflow-hidden w-3/4 sm:w-[600px] sm:max-w-full shadow-lg">
-          <div className="sm:p-16 p-10">
-            <h2 className="text-xl text-center font-semibold mb-6">
-              {quiz.question}
-            </h2>
-            <ul className="list-none p-0">
-              <li className="text-lg my-4">
-                <input
-                  className="answer mr-2"
-                  type="radio"
-                  id="a"
-                  name="answer"
-                />
-                <label htmlFor="a" className="cursor-pointer" id="a_text">
-                  {quiz.a}
-                </label>
-              </li>
-              <li className="text-lg my-4">
-                <input
-                  className="answer mr-2"
-                  type="radio"
-                  id="b"
-                  name="answer"
-                />
-                <label htmlFor="b" className="cursor-pointer" id="b_text">
-                  {quiz.b}
-                </label>
-              </li>
-              <li className="text-lg my-4">
-                <input
-                  className="answer mr-2"
-                  type="radio"
-                  id="c"
-                  name="answer"
-                />
-                <label htmlFor="c" className="cursor-pointer" id="c_text">
-                  {quiz.c}
-                </label>
-              </li>
-              <li className="text-lg my-4">
-                <input
-                  className="answer mr-2"
-                  type="radio"
-                  id="d"
-                  name="answer"
-                />
-                <label htmlFor="d" className="cursor-pointer" id="d_text">
-                  {quiz.d}
-                </label>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <button
-              onClick={handleSubmit}
-              className="bg-[#0f244c] text-white w-full py-5 text-lg font-medium hover:bg-[#112856] focus:bg-[#0e1e3d] transition-colors"
-              id="submit"
-            >
-              Submit
-            </button>
-          </div>
-        </div>
+      <div className="flex sm:flex-row flex-col items-center font-poppins text-black gap-3">
+        <Questions
+          handleHintClick={handleHintClick}
+          quiz={quiz}
+          handleSubmit={handleSubmit}
+        />
+
+        <Hint
+          showHint={showHint}
+          handleExitHint={handleExitHint}
+          loadingHint={loadingHint}
+          setLoadingHint={setLoadingHint}
+          hint={hint}
+          isHovered={isHovered}
+          setIsHovered={setIsHovered}
+          handleNewHint={handleNewHint}
+        />
       </div>
     );
   } else {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br font-poppins text-black">
-        <div className="bg-white rounded-xl shadow-lg p-12 sm:w-[600px] max-w-full text-center">
-          <h2 className="text-xl font-semibold mb-6">
-            You answered {score}/{data.length} correctly!
-          </h2>
-          <button
-            onClick={restart}
-            className="bg-[#0f244c] text-white w-full py-5 text-lg font-medium hover:bg-[#112856] focus:bg-[#0e1e3d] transition-colors"
-          >
-            Restart?
-          </button>
-        </div>
-      </div>
-    );
+    return <Restart score={score} length={data.length} restart={restart} />;
   }
 }
 

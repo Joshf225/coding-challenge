@@ -28,13 +28,6 @@ const quizData = [
     d: "Saturn",
     correct: "b",
   },
-
-  /*
-A) Mount Mars
-B) Olympus Mons
-C) Mars Peak
-D) Red Hill
-*/
   {
     question: "What is the name of the largest volcano on Mars?",
     a: "Mount Mars",
@@ -49,23 +42,6 @@ D) Red Hill
     b: "False",
     correct: "False",
   },
-
-  /*
-  
-What is the weather like on Mars?
-A) Very hot all year
-B) Super rainy
-C) Cold and dusty
-D) Like Hawaii
-✅ Answer: C) Cold and dusty
-
-What does Mars have that looks a lot like Earth’s features?
-A) Oceans
-B) Shopping malls
-C) Mountains and valleys
-D) Forests
-✅ Answer: C) Mountains and valleys
-  */
   {
     question: "What is a “rover” on Mars??",
     a: "A type of spaceship",

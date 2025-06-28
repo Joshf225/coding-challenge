@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Loader = () => {
+const AstronautLoader = () => {
   return (
     <StyledWrapper>
       <div className="space-loader">
@@ -401,4 +401,4 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default Loader;
+export default AstronautLoader;
