@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Loader from "../../src/components/Loader";
+import AstronautLoader from "../../src/components/loaders/AstronautLoader";
 import { BrowserRouter } from "react-router-dom";
 import AsteroidDashboard from "../../src/pages/AsteroidDashboard";
 import DatePicker from "../../src/components/dashboard/DatePicker";
@@ -11,7 +11,7 @@ test("renders loader when loading = true", () => {
     loading &&
       render(
         <BrowserRouter>
-          <Loader />
+          <AstronautLoader />
         </BrowserRouter>
       );
   }

@@ -47,6 +47,7 @@ const ExplorePage = () => {
         baseUrl
       );
       setPhotosLength(length);
+      setEarthDate(photos[0]?.earth_date);
 
       const validPhotos = photos
         ?.filter((photo) => {

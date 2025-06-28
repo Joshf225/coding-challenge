@@ -11,7 +11,7 @@ import {
 import DatePicker from "../components/dashboard/DatePicker";
 
 import Navbar from "../components/Navbar";
-import Loader from "../components/Loader2";
+import ImageLoader from "../components/loaders/ImageLoader";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -103,7 +103,7 @@ const AsteroidDashboard = () => {
       <div className="h-full w-full relative">
         {loading ? (
           <div className="flex items-center justify-center sm:mb-[12rem]">
-            <Loader />
+            <ImageLoader />
           </div>
         ) : (
           <>
