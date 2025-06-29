@@ -53,7 +53,8 @@ A space-themed full-stack app that helps users explore near-earth objects, brows
 - `.env` file in `frontend/` root:
 
 ```env
-VITE_APP_BACKEND_BASE_URL=http://localhost:5173/api
+VITE_APP_BACKEND_BASE_URL="http://localhost:3000/api"
+VITE_GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
 ```
 
 Local Development
