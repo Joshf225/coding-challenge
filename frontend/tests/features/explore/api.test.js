@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { fetchMarsPhotos } from "../../../src/features/trivia/explore/api";
+import { fetchMarsPhotos } from "../../../src/features/explore/api";
 
 test("fetchMarsPhotos returns expected data", async () => {
   global.fetch = vi.fn(() =>

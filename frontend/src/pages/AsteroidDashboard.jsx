@@ -12,6 +12,7 @@ import DatePicker from "../components/dashboard/DatePicker";
 
 import Navbar from "../components/Navbar";
 import ImageLoader from "../components/loaders/ImageLoader";
+import { toast } from "react-toastify";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -52,7 +53,14 @@ const AsteroidDashboard = () => {
     const fetchNEO = async () => {
       const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
       setLoading(true);
-
+      const delayTimer = setTimeout(() => {
+        toast.info(CustomToast, {
+          position: "bottom-center",
+          autoClose: 10000,
+          className: "sm:w-[1000px]",
+          toastId: "slow-fetch", // prevent duplicate toasts
+        });
+      }, 5000);
       try {
         const res = await fetch(
           `${baseUrl}/feed?start=${fromDate}&end=${toDate}`
@@ -61,8 +69,11 @@ const AsteroidDashboard = () => {
         setNeoData(data.near_earth_objects);
       } catch (err) {
         console.error(err);
+        toast.error(err);
       } finally {
+        clearTimeout(delayTimer);
         setLoading(false);
+        toast.dismiss("slow-fetch");
       }
     };
 
