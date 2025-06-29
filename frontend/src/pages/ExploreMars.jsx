@@ -20,7 +20,7 @@ const ExplorePage = () => {
   const [RoverDetails, setRoverDetails] = useState(null);
   const [roverMaxSol, setRoverMaxSol] = useState("");
   const [earthDate, setEarthDate] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
 
