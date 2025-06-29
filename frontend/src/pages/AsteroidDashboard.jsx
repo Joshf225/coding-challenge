@@ -13,6 +13,8 @@ import DatePicker from "../components/dashboard/DatePicker";
 import Navbar from "../components/Navbar";
 import ImageLoader from "../components/loaders/ImageLoader";
 import { toast } from "react-toastify";
+import CustomToast from "../components/toasts/CustomToast";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,17 +26,13 @@ ChartJS.register(
 export const getDayDifference = (fromDateStr, toDateStr) => {
   const from = new Date(fromDateStr);
   const to = new Date(toDateStr);
-
-  // Time difference in milliseconds
-  const diffMs = to.getTime() - from.getTime();
-
-  // Convert ms to full days
-  return diffMs / (1000 * 60 * 60 * 24);
+  return (to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24);
 };
 
 const AsteroidDashboard = () => {
   const start = new Date().toISOString().split("T")[0];
-  const end = new Date(Date.now() + 6 * 86400000).toISOString().split("T")[0]; // +6 days
+  const end = new Date(Date.now() + 6 * 86400000).toISOString().split("T")[0];
+
   const [neoData, setNeoData] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -43,37 +41,40 @@ const AsteroidDashboard = () => {
   const [checkDate, setCheckDate] = useState(false);
 
   useEffect(() => {
-    // check if user chose dates one week apart
     const days = getDayDifference(fromDate, toDate) + 1;
-
     if (days !== 7) {
-      return alert("You must pick dates that are a week apart!");
+      alert("You must pick dates that are a week apart!");
+      return;
     }
 
     const fetchNEO = async () => {
       const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
+
       setLoading(true);
+
       const delayTimer = setTimeout(() => {
         toast.info(CustomToast, {
           position: "bottom-center",
           autoClose: 10000,
           className: "sm:w-[1000px]",
-          toastId: "slow-fetch", // prevent duplicate toasts
+          toastId: "slow-fetch",
         });
       }, 5000);
+
       try {
         const res = await fetch(
           `${baseUrl}/feed?start=${fromDate}&end=${toDate}`
         );
         const data = await res.json();
         setNeoData(data.near_earth_objects);
+
+        clearTimeout(delayTimer);
       } catch (err) {
         console.error(err);
-        toast.error(err);
-      } finally {
+        toast.error("Error fetching data. Please try again.");
         clearTimeout(delayTimer);
+      } finally {
         setLoading(false);
-        toast.dismiss("slow-fetch");
       }
     };
 
@@ -121,6 +122,7 @@ const AsteroidDashboard = () => {
             <h1 className="text-3xl font-bold sm:text-left text-center text-[#0c1c3b] mt-20 px-5">
               Asteroid Threat Visualizer
             </h1>
+
             {/* Chart 1: NEOs per day*/}
             <div className="flex sm:flex-row flex-col items-center justify-center gap-11">
               <div className="mb-10">

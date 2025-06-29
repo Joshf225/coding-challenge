@@ -25,6 +25,13 @@ const ExplorePage = () => {
   const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
 
   const fetchPhotos = async () => {
+    if (!rover || !cameras) return console.log("missing rover or cameras");
+
+    const cacheKey = `${rover}_${cameras}_sol${sol}`;
+    const cached = localStorage.getItem(cacheKey);
+
+    setIsLoading(true);
+
     const delayTimer = setTimeout(() => {
       toast.info(CustomToast, {
         position: "bottom-center",
@@ -32,21 +39,17 @@ const ExplorePage = () => {
         className: "sm:w-[1000px]",
         toastId: "slow-fetch", // prevent duplicate toasts
       });
-    }, 5000); // show message if fetch takes more than 3s
-
-    if (!rover || !cameras) return console.log("missing rover or cameras");
-
-    const cacheKey = `${rover}_${cameras}_sol${sol}`;
-    const cached = localStorage.getItem(cacheKey);
+    }, 5000); // show message if fetch takes more than 5s
 
     if (cached) {
+      clearTimeout(delayTimer);
+      setIsLoading(false);
       setDisplayPhotos(JSON.parse(cached));
       setPhotosLength(JSON.parse(cached).length);
       setEarthDate(JSON.parse(cached)[0].earth_date);
       console.log("CACHE: ", JSON.parse(cached));
       return console.log("pulled from cache");
     }
-    setIsLoading(true);
 
     try {
       const { photos, length } = await fetchMarsPhotos(
@@ -55,6 +58,8 @@ const ExplorePage = () => {
         sol,
         baseUrl
       );
+
+      clearTimeout(delayTimer); // stop the toast if fetch resolved fast
       setPhotosLength(length);
       setEarthDate(photos[0]?.earth_date);
 
@@ -91,11 +96,10 @@ const ExplorePage = () => {
       console.log("Valid Photos: ", validPhotos);
       setDisplayPhotos(validPhotos || []);
     } catch (error) {
-      toast.error("Error fetching photos: ", error);
-      console.error("Error fetching photos:", error);
-    } finally {
       clearTimeout(delayTimer);
-      toast.dismiss("slow-fetch"); // remove delay toast if fetch completed
+      console.error("Error fetching photos:", error);
+      toast.error("Error fetching photos: ", error);
+    } finally {
       setIsLoading(false);
     }
   };
