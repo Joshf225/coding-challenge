@@ -5,10 +5,8 @@ import SolSlider from "../components/explore-page/SolSlider";
 import RoverCameras from "../components/explore-page/RoverCameras";
 import Rover from "../components/explore-page/Rover";
 import Navbar from "../components/Navbar";
-import {
-  fetchMarsPhotos,
-  fetchRoverDetails,
-} from "../features/trivia/explore/api";
+import { fetchMarsPhotos, fetchRoverDetails } from "../features/explore/api";
+import { toast } from "react-toastify";
 
 const ExplorePage = () => {
   const [rover, setRover] = useState(null);
@@ -38,8 +36,16 @@ const ExplorePage = () => {
       console.log("CACHE: ", JSON.parse(cached));
       return console.log("pulled from cache");
     }
+    setIsLoading(true);
+    const delayTimer = setTimeout(() => {
+      toast.info(CustomToast, {
+        position: "bottom-center",
+        autoClose: 10000,
+        className: "sm:w-[1000px]",
+        toastId: "slow-fetch", // prevent duplicate toasts
+      });
+    }, 5000); // show message if fetch takes more than 3s
     try {
-      setIsLoading(true);
       const { photos, length } = await fetchMarsPhotos(
         rover,
         cameras,
@@ -82,8 +88,11 @@ const ExplorePage = () => {
       console.log("Valid Photos: ", validPhotos);
       setDisplayPhotos(validPhotos || []);
     } catch (error) {
+      toast.error("Error fetching photos: ", error);
       console.error("Error fetching photos:", error);
     } finally {
+      clearTimeout(delayTimer);
+      toast.dismiss("slow-fetch"); // remove delay toast if fetch completed
       setIsLoading(false);
     }
   };

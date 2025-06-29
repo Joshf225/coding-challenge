@@ -120,12 +120,6 @@ const PhotoGrid = ({
         </>
       ) : (
         <div className="mt-[200px] flex items-center justify-center m-4">
-          {/* <h1>
-            You may experience a long waiting period when using this app, this
-            is because I'm using a free service to host my backend/api. Just
-            give it up to 30sec max and then refresh and try again if you get no
-            response. Thanks for joining me on this journey to Mars!!
-          </h1> */}
           <AstronautLoader />
         </div>
       )}
