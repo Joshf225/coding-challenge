@@ -7,6 +7,7 @@ import Rover from "../components/explore-page/Rover";
 import Navbar from "../components/Navbar";
 import { fetchMarsPhotos, fetchRoverDetails } from "../features/explore/api";
 import { toast } from "react-toastify";
+import CustomToast from "../components/toasts/CustomToast";
 
 const ExplorePage = () => {
   const [rover, setRover] = useState(null);
@@ -19,11 +20,20 @@ const ExplorePage = () => {
   const [RoverDetails, setRoverDetails] = useState(null);
   const [roverMaxSol, setRoverMaxSol] = useState("");
   const [earthDate, setEarthDate] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL;
 
   const fetchPhotos = async () => {
+    const delayTimer = setTimeout(() => {
+      toast.info(CustomToast, {
+        position: "bottom-center",
+        autoClose: 10000,
+        className: "sm:w-[1000px]",
+        toastId: "slow-fetch", // prevent duplicate toasts
+      });
+    }, 5000); // show message if fetch takes more than 3s
+
     if (!rover || !cameras) return console.log("missing rover or cameras");
 
     const cacheKey = `${rover}_${cameras}_sol${sol}`;
@@ -37,14 +47,7 @@ const ExplorePage = () => {
       return console.log("pulled from cache");
     }
     setIsLoading(true);
-    const delayTimer = setTimeout(() => {
-      toast.info(CustomToast, {
-        position: "bottom-center",
-        autoClose: 10000,
-        className: "sm:w-[1000px]",
-        toastId: "slow-fetch", // prevent duplicate toasts
-      });
-    }, 5000); // show message if fetch takes more than 3s
+
     try {
       const { photos, length } = await fetchMarsPhotos(
         rover,
