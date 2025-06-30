@@ -28,6 +28,7 @@ A space-themed full-stack app that helps users explore near-earth objects, brows
 - 🌑 **Asteroid Dashboard** – Visualizes NEO counts, velocities, diameters across a 7-day date range.
 - 🚀 **Mars Explorer** – Browse rover photos by sol, filter by camera types.
 - 🧠 **Trivia Quiz** – Fun space quiz with score tracking and restart functionality.
+- 🤖 **AI Integration** - AI hint assistant for users in the Trivia section.
 - 📅 **Date Validation + Error Handling** – Alerts user if the date range is invalid.
 - ⏳ **Loading States**, 🧠 **Toasts**, and 🗃️ **Performance optimizations** (e.g., localStorage caching).
 - ✅ **Testing** – Unit, component, and integration test suite.
