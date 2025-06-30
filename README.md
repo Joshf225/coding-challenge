@@ -102,7 +102,7 @@ Pages
 
     Explore Mars – Includes PhotoGrid, SolSlider, Rover, RoverCameras.
 
-    Trivia – Includes TriviaQuestions, score, restart.
+    Trivia – Includes TriviaQuestions, score, hints(using AI), restart.
 
     Dashboard – DatePicker + charts powered by Chart.js.
 
